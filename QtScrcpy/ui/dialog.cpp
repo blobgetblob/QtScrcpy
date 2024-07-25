@@ -292,14 +292,13 @@ void Dialog::on_updateDevice_clicked()
     m_adb.execute("", QStringList() << "devices");
 }
 
-void Dialog::on_startServerBtn_clicked()
-{
+void Dialog::connectSingleDevice(QString serial){
     outLog("start server...", false);
 
     // this is ok that "original" toUshort is 0
     quint16 videoSize = ui->maxSizeBox->currentText().trimmed().toUShort();
     qsc::DeviceParams params;
-    params.serial = ui->serialBox->currentText().trimmed();
+    params.serial = serial;
     params.maxSize = videoSize;
     params.bitRate = getBitRate();
     // on devices with Android >= 10, the capture frame rate can be limited
@@ -324,6 +323,11 @@ void Dialog::on_startServerBtn_clicked()
     params.scid = QRandomGenerator::global()->bounded(1, 10000) & 0x7FFFFFFF;
 
     qsc::IDeviceManage::getInstance().connectDevice(params);
+}
+
+void Dialog::on_startServerBtn_clicked()
+{
+    connectSingleDevice(ui->serialBox->currentText().trimmed());
 }
 
 void Dialog::on_stopServerBtn_clicked()
@@ -548,6 +552,19 @@ void Dialog::on_clearOut_clicked()
 void Dialog::on_stopAllServerBtn_clicked()
 {
     qsc::IDeviceManage::getInstance().disconnectAllDevice();
+}
+
+void Dialog::on_disconnectAllBtn_clicked()
+{
+    qsc::IDeviceManage::getInstance().disconnectAllDevice();
+}
+
+void Dialog::on_connectAllBtn_clicked()
+{
+    QStringList devices = m_adb.getDevicesSerialFromStdOut();
+    for (auto &item : devices) {
+        connectSingleDevice(item);
+    }
 }
 
 void Dialog::on_refreshGameScriptBtn_clicked()
