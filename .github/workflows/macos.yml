@@ -1,8 +1,6 @@
 name: MacOS
 on: 
   push:
-    tags:
-      - '*'
     paths:
       - 'QtScrcpy/**'
       - '!QtScrcpy/res/**'
