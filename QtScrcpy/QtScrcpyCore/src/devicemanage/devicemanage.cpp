@@ -44,7 +44,6 @@ bool DeviceManage::connectDevice(qsc::DeviceParams params)
         qInfo("over the maximum number of connections");
         return false;
     }
-    // 没有必要分配端口，都用27183即可，连接建立以后server会释放监听的
     quint16 port = 0;
     if (params.useReverse) {
          port = getFreePort();
