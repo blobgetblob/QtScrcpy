@@ -1,6 +1,8 @@
 name: Ubuntu
 on: 
   push:
+    tags:
+      - '*'
     paths:
       - 'QtScrcpy/**'
       - '!QtScrcpy/res/**'

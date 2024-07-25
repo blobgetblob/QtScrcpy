@@ -61,6 +61,8 @@ private slots:
     void on_useSingleModeCheck_clicked();
     void on_serialBox_currentIndexChanged(const QString &arg1);
 
+    void on_referenceBox_currentIndexChanged(const QString &arg1);
+
     void on_startAudioBtn_clicked();
 
     void on_stopAudioBtn_clicked();
@@ -68,6 +70,8 @@ private slots:
     void on_installSndcpyBtn_clicked();
 
     void on_autoUpdatecheckBox_toggled(bool checked);
+
+    void on_groupcheckBox_toggled(bool checked);
 
     void connectSingleDevice(QString serial);
 

@@ -70,9 +70,11 @@ Dialog::Dialog(QWidget *parent) : QWidget(parent), ui(new Ui::Widget)
             //log = m_adb.getStdOut();
             if (args.contains("devices")) {
                 QStringList devices = m_adb.getDevicesSerialFromStdOut();
+                ui->referenceBox->clear();
                 ui->serialBox->clear();
                 ui->connectedPhoneList->clear();
                 for (auto &item : devices) {
+                    ui->referenceBox->addItem(item);
                     ui->serialBox->addItem(item);
                     ui->connectedPhoneList->addItem(Config::getInstance().getNickName(item) + "-" + item);
                 }
@@ -717,6 +719,13 @@ void Dialog::on_serialBox_currentIndexChanged(const QString &arg1)
     ui->userNameEdt->setText(Config::getInstance().getNickName(arg1));
 }
 
+void Dialog::on_referenceBox_currentIndexChanged(const QString &arg1)
+{
+    if (ui->groupcheckBox->isChecked()) {
+        GroupController::instance().updateDeviceState(arg1);
+    }
+}
+
 quint32 Dialog::getBitRate()
 {
     return ui->bitRateEdit->text().trimmed().toUInt() *
@@ -767,4 +776,18 @@ void Dialog::on_autoUpdatecheckBox_toggled(bool checked)
     } else {
         m_autoUpdatetimer.stop();
     }
+}
+
+void Dialog::on_groupcheckBox_toggled(bool checked)
+{
+    if (!ui->referenceBox->currentText().isEmpty()) {
+        if (checked) {
+            GroupController::instance().updateDeviceState(ui->referenceBox->currentText());
+        } else {
+            GroupController::instance().removeDevice(ui->referenceBox->currentText());
+        }
+    } else {
+        outLog("no reference selected", true);
+    }
+    
 }
