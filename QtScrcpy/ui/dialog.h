@@ -75,6 +75,8 @@ private slots:
 
     void connectSingleDevice(QString serial);
 
+    QString getHost();
+
 private:
     bool checkAdbRun();
     void initUI();

@@ -15,6 +15,8 @@ public:
     void updateDeviceState(const QString& serial);
     void addDevice(const QString& serial);
     void removeDevice(const QString& serial);
+    void setHost(const QString& serial);
+    void removeHost();
 
 private:
     // DeviceObserver
@@ -48,6 +50,7 @@ private:
     explicit GroupController(QObject *parent = nullptr);
     bool isHost(const QString& serial);
     QSize getFrameSize(const QString& serial);
+    QString m_host;
 
 private:
     QVector<QString> m_devices;

@@ -20,6 +20,7 @@
 #include "mousetap/mousetap.h"
 #include "ui_videoform.h"
 #include "videoform.h"
+#include "dialog.h"
 
 VideoForm::VideoForm(bool framelessWindow, bool skin, QWidget *parent) : QWidget(parent), ui(new Ui::videoForm), m_skin(skin)
 {
@@ -163,13 +164,13 @@ void VideoForm::setSerial(const QString &serial)
 
 void VideoForm::showToolForm(bool show)
 {
-    (void)show;
-    // if (!m_toolForm) {
-    //     m_toolForm = new ToolForm(this, ToolForm::AP_OUTSIDE_RIGHT);
-    //     m_toolForm->setSerial(m_serial);
-    // }
-    // m_toolForm->move(pos().x() + geometry().width(), pos().y() + 30);
-    // m_toolForm->setVisible(show);
+    //(void)show;
+    if (!m_toolForm) {
+        m_toolForm = new ToolForm(this, ToolForm::AP_OUTSIDE_RIGHT);
+        m_toolForm->setSerial(m_serial);
+    }
+    m_toolForm->move(pos().x() + geometry().width(), pos().y() + 30);
+    m_toolForm->setVisible(show);
 }
 
 void VideoForm::moveCenter()

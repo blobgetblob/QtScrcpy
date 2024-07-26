@@ -454,6 +454,8 @@ void Dialog::onDeviceConnected(bool success, const QString &serial, const QStrin
         return;
     }
 
+    outLog(serial);
+
     auto videoForm = new VideoForm(ui->framelessCheck->isChecked(), Config::getInstance().getSkin());
     videoForm->setSerial(serial);
 
@@ -714,6 +716,8 @@ void Dialog::on_useSingleModeCheck_clicked()
     adjustSize();
 }
 
+
+
 void Dialog::on_serialBox_currentIndexChanged(const QString &arg1)
 {
     ui->userNameEdt->setText(Config::getInstance().getNickName(arg1));
@@ -722,6 +726,8 @@ void Dialog::on_serialBox_currentIndexChanged(const QString &arg1)
 void Dialog::on_referenceBox_currentIndexChanged(const QString &arg1)
 {
     if (ui->groupcheckBox->isChecked()) {
+        GroupController::instance().removeHost();
+        GroupController::instance().setHost(arg1);
         GroupController::instance().updateDeviceState(arg1);
     }
 }
@@ -781,13 +787,24 @@ void Dialog::on_autoUpdatecheckBox_toggled(bool checked)
 void Dialog::on_groupcheckBox_toggled(bool checked)
 {
     if (!ui->referenceBox->currentText().isEmpty()) {
+        outLog(ui->referenceBox->currentText());
         if (checked) {
+            GroupController::instance().setHost(ui->referenceBox->currentText());
             GroupController::instance().updateDeviceState(ui->referenceBox->currentText());
         } else {
-            GroupController::instance().removeDevice(ui->referenceBox->currentText());
+            GroupController::instance().removeHost();
+            GroupController::instance().updateDeviceState(ui->referenceBox->currentText());
         }
     } else {
         outLog("no reference selected", true);
     }
     
+}
+
+QString Dialog::getHost()
+{
+    if (!ui->referenceBox->currentText().isEmpty() && ui->groupcheckBox->isChecked()) {
+        return ui->referenceBox->currentText();
+    }
+    return "";
 }

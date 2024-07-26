@@ -1,4 +1,9 @@
 #include <QPointer>
+#include <QCoreApplication>
+#include <QDebug>
+#include <QDir>
+#include <QFileInfo>
+#include <QProcess>
 
 #include "groupcontroller.h"
 #include "videoform.h"
@@ -15,7 +20,7 @@ bool GroupController::isHost(const QString &serial)
         return true;
     }
 
-    return static_cast<VideoForm*>(data)->isHost();
+    return m_host == serial;
 }
 
 QSize GroupController::getFrameSize(const QString &serial)
@@ -32,6 +37,16 @@ GroupController &GroupController::instance()
 {
     static GroupController gc;
     return gc;
+}
+
+void GroupController::setHost(const QString &serial)
+{
+    m_host = serial;
+}
+
+void GroupController::removeHost()
+{
+    m_host = "";
 }
 
 void GroupController::updateDeviceState(const QString &serial)
