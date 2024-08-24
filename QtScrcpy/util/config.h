@@ -17,7 +17,7 @@ struct UserBootConfig
     bool reverseConnect   = true;
     bool showFPS          = false;
     bool windowOnTop      = false;
-    bool autoOffScreen    = false;
+    bool autoOffScreen    = true;
     bool framelessWindow  = false;
     bool keepAlive        = false;
     bool simpleMode       = false;

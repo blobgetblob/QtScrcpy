@@ -1,6 +1,9 @@
 # For VS2019 and Xcode 12+ support.
 cmake_minimum_required(VERSION 3.19 FATAL_ERROR)
 
+set(CMAKE_PREFIX_PATH "/Users/dwi.dev/qt/5.14.1/clang_64/")
+
+
 #
 # Global config
 #

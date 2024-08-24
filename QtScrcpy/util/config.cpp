@@ -79,7 +79,7 @@
 #define COMMON_WINDOW_ON_TOP_DEF false
 
 #define COMMON_AUTO_OFF_SCREEN_KEY "AutoOffScreen"
-#define COMMON_AUTO_OFF_SCREEN_DEF false
+#define COMMON_AUTO_OFF_SCREEN_DEF true
 
 #define COMMON_FRAMELESS_WINDOW_KEY "FramelessWindow"
 #define COMMON_FRAMELESS_WINDOW_DEF false
